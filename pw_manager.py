@@ -1,5 +1,5 @@
 from typing import Tuple
-filename = 'E:\code\passwords.pickle'
+filename = '\passwords.pickle'
 
 def new_pass(length=12, exclusions=None) -> str:
     """Takes in a minimum length and an exclusions parameter that specifies
