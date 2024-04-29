@@ -31,10 +31,15 @@ The function will automatically run for you when you run the program, but I woul
 When it starts, it will ask if you want the program to create a new password for you, if you want to retrieve an already saved password, or if you want to either bring over an existing password or reset one that the program made for you.
 You can type "n" and Enter for a new password, "l" (lowercase L) and Enter to retrieve your saved password for a given website, or "r" to either manually or automatically set a password for an existing password either from a different service or from your previously saved passwords.
 If you are ever generating a new password automatically, it will ask you for the length you ant the password, as many websites will have a minimum requred password length, and if you want to exclude any types of characters, as some websites may not accept certain types of characters. 
+
 The key for the character types are as follows: 
+
 "l" (lowercase L): Lowercase ascii characters
+
 "u": Uppercase ascii characters
+
 "d": Digits (0-9)
+
 "p": ascii punctuation characters (!"#$%&'()*+, -./:;<=>?@[\]^_`{|}~)
 
 You can type any or all of these (though if you type all, your password will be blank) at once with no spaces and it will take those out of possible characters it will make the password from.
