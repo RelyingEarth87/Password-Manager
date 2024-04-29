@@ -11,6 +11,10 @@ Other than writing your own passwords into the password setter function, your pa
 At this time, running this program requires a Python installation. It was written on Python 3.9, but as long as your Python version supports Pickle natively, you will only need to pip install one thing.
 If you do not have Python, you will need to install it.
 
+1. Install Python (preferably version 3.9 or later)
+2. Download the pw_manager.py file from this repository
+3. Pip install pyperclip (and possibly pickle) packages, as directed below:
+
 ## Pip Installs
 You will need to go to the command prompt to install the packages this program uses. Fortunately there is only 1-2. 
 1. Go to search bar on Windows
@@ -20,6 +24,7 @@ You will need to go to the command prompt to install the packages this program u
    4.1 If your Python is not installed on your boot drive (C:), you may need to type "path\to\Python.exe -m pip install pyperclip" instead
 5. If you have Python version 3.9 or later, you are done and can run the program
    5.1 If you have an earlier version of Python, you will also need to type "pip install pickle"
+6. (optional) If you would like (or if you get an error from my very basic implementation of file naming convention), you can change the path to a specific folder or file name in line 2 of the program file.
 
 # Running the program
 The function will automatically run for you when you run the program, but I would recommend running it in a code editor or IDE so you can see the output before the program closes.
