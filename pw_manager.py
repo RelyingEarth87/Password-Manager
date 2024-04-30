@@ -204,6 +204,7 @@ def main():
     # Creating a file if it doesn't exist
     if not os.path.isfile(filename):
         file = open(filename, 'wb+')
+        file.close()
     
     new_load: str = input("What would you like to do? (nlr) ")
 
