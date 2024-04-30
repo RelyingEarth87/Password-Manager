@@ -1,5 +1,16 @@
 from typing import Tuple
-filename = '\passwords.pickle'
+import pickle
+filename = '.\passwords.pickle'
+
+def repickle(data: dict) -> None:
+    """Resaves the data after unpickling
+
+    Args:
+        data (dict): the dictionary containing all the data to repickle
+    """
+    file = open(filename, 'wb')
+
+    pickle.dump(data, file)
 
 def new_pass(length=12, exclusions=None) -> str:
     """Takes in a minimum length and an exclusions parameter that specifies
@@ -54,10 +65,9 @@ def save_pass(site: str, username: str, password: str) -> None:
         username (str): The entered username for the specified website
         password (str): The programmatically generated  and cryptographically secure password
     """
-    import pickle
 
-    # if no file exists, creating a new file with filename, otherwise opening it to write bytes in
-    file = open(filename, 'wb+')
+    # opening the file to gather the old passwords
+    file = open(filename, 'rb')
 
     # creating the key for the dictionary with the top level domain of the website name
     site_split = site.split('.')
@@ -74,12 +84,12 @@ def save_pass(site: str, username: str, password: str) -> None:
     # loading the pickled dictionary from the file and appending the new user data to it
     try:
         passwords = pickle.load(file)
-    except:
+    except EOFError:
         passwords = {}
     passwords[site_name] = {"site": site, "username": username, "password": password}
 
-    pickle.dump(passwords, file)
     file.close()
+    repickle(passwords)
 
     print("Your password has been saved!")
 
@@ -92,11 +102,11 @@ def get_pass(site: str) -> Tuple[str, str, str]:
     Returns:
         Tuple[str, str, str]: The website name, username, and password for the given website
     """
-    import pickle
 
     # opening the file and retrieving the dictionary with all the information
     file = open(filename, 'rb')
     passwords = pickle.load(file)
+    repickle(passwords)
 
     # standardizing the website name to prepare for search
     site_split = site.split('.')
@@ -151,11 +161,14 @@ def check_sites(site) -> Tuple[str, str]:
     Returns:
         Tuple[str, str]: Outpusts either a 1 if data exists and a username, or a -1 if data does not exist
     """
-    import pickle
 
     # opening the file and importing the pickled data
     file = open(filename, 'rb')
     passwords: dict = pickle.load(file)
+    file.close()
+
+    # Resaving the data
+    repickle(passwords)
 
     # extracting the website names from the dictionary
     sites = dict.fromkeys(passwords)
@@ -184,8 +197,13 @@ def check_sites(site) -> Tuple[str, str]:
 
 def main():
     import pyperclip
+    import os.path
     print("""Welcome to Password Manager, to proceed, you can type n to create a new password, l to load a 
         previously saved password, or r to either set a password manually or reset an existing password.""")
+    
+    # Creating a file if it doesn't exist
+    if not os.path.isfile(filename):
+        file = open(filename, 'wb+')
     
     new_load: str = input("What would you like to do? (nlr) ")
 
@@ -222,8 +240,8 @@ def main():
         exists, user = check_sites(site)
         if exists == -1:
             user = input("What username did you use for this site? ")
-
         reset_pass(site, user)
+
 
 
 
