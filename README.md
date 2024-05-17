@@ -21,9 +21,11 @@ You will need to go to the command prompt to install the packages this program u
 2. Search for "cmd"
 3. Open Command Prompt
 4. Type "pip install pyperclip", hit Enter
+   
    4.1 If your Python is not installed on your boot drive (C:), you may need to type "path\to\Python.exe -m pip install pyperclip" instead
 5. Type "pip install rsa", hit Enter
 6. If you have Python version 3.9 or later, you are done and can run the program
+   
    6.1 If you have an earlier version of Python, you will also need to type "pip install pickle"
 7. (optional) If you would like (or if you get an error from my very basic implementation of file naming convention), you can change the path to a specific folder or file name in line 2 of the program file.
 
