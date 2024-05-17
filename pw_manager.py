@@ -1,6 +1,11 @@
 from typing import Tuple
 import pickle
+import rsa
+
+# initializing file names
 filename = '.\passwords.pickle'
+public = '.\public.pem'
+private = '.\private.pem'
 
 def repickle(data: dict) -> None:
     """Resaves the data after unpickling
@@ -8,9 +13,11 @@ def repickle(data: dict) -> None:
     Args:
         data (dict): the dictionary containing all the data to repickle
     """
+    encrypted_data = encryption(data)
+
     file = open(filename, 'wb')
 
-    pickle.dump(data, file)
+    pickle.dump(encrypted_data, file)
 
 def new_pass(length=12, exclusions=None) -> str:
     """Takes in a minimum length and an exclusions parameter that specifies
@@ -83,9 +90,11 @@ def save_pass(site: str, username: str, password: str) -> None:
 
     # loading the pickled dictionary from the file and appending the new user data to it
     try:
-        passwords = pickle.load(file)
+        data = pickle.load(file)
+        passwords = decryption(data)
     except EOFError:
         passwords = {}
+
     passwords[site_name] = {"site": site, "username": username, "password": password}
 
     file.close()
@@ -105,7 +114,8 @@ def get_pass(site: str) -> Tuple[str, str, str]:
 
     # opening the file and retrieving the dictionary with all the information
     file = open(filename, 'rb')
-    passwords = pickle.load(file)
+    data = pickle.load(file)
+    passwords = decryption(data)
     repickle(passwords)
 
     # standardizing the website name to prepare for search
@@ -164,10 +174,11 @@ def check_sites(site) -> Tuple[str, str]:
 
     # opening the file and importing the pickled data
     file = open(filename, 'rb')
-    passwords: dict = pickle.load(file)
+    data = pickle.load(file)
+    passwords = decryption(data)
     file.close()
 
-    # Resaving the data
+    # Resaving the encrypted data
     repickle(passwords)
 
     # extracting the website names from the dictionary
@@ -195,6 +206,55 @@ def check_sites(site) -> Tuple[str, str]:
         print("Website data not found")
         return -1, None
 
+def generate_keys(bytes: int) -> None:
+    """Generates public and private keys for asymmetric encryption and saves to respective files.
+
+    Args:
+        bytes (int): the memory allocation, in bytes, for the generation of the keys
+    """
+
+    # generating keys using RSA library
+    public_key, private_key = rsa.newkeys(bytes)
+
+    #saving files
+    with open(public, 'wb') as f:
+        f.write(public_key.save_pkcs1("PEM"))
+    
+    with open(private, 'wb') as f:
+        f.write(private_key.save_pkcs1("PEM"))
+
+def encryption(message: str) -> str:
+    """Gets the public key and uses it to encrypt the data for secure storage
+
+    Args:
+        message (str): the data to be encrypted
+
+    Returns:
+        str: the encrypted data in a bytes array format
+    """
+    with open(public, 'rb') as f:
+        public_key = rsa.PublicKey.load_pkcs1(f.read())
+    
+    encrypted: str = rsa.encrypt(message.encode(), public_key)
+
+    return encrypted
+
+def decryption(message: str) -> str:
+    """Gets the private key and uses it to decrypt the data for use
+
+    Args:
+        message (str): The encrypted data to be decrypted
+
+    Returns:
+        str: An unencrypted string containing the secured data
+    """
+    with open(private, 'rb') as f:
+        private_key = rsa.PrivateKey.load_pkcs1(f.read())
+    
+    unencrypted: str = rsa.ecrypt(message, private_key)
+
+    return unencrypted.decode()
+
 def main():
     import pyperclip
     import os.path
@@ -205,6 +265,9 @@ def main():
     if not os.path.isfile(filename):
         file = open(filename, 'wb+')
         file.close()
+
+    if not os.path.isfile(public) or not os.path.isfile(private):
+        generate_keys(1024)
     
     new_load: str = input("What would you like to do? (nlr) ")
 
@@ -242,9 +305,6 @@ def main():
         if exists == -1:
             user = input("What username did you use for this site? ")
         reset_pass(site, user)
-
-
-
 
 if __name__ == "__main__":
     main()
