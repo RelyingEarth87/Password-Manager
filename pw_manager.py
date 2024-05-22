@@ -266,6 +266,8 @@ def decryption(message: str) -> str:
 def initializer() -> None:
     """Initializes the file paths and creates the files and keys"""
     from os import path, mkdir, getcwd
+
+    # getting current directory and making a subdirectory for the files
     curr_directory = getcwd()
     path_ = path.join(curr_directory, "pwman")
     if not path.exists(path_):
