@@ -3,9 +3,9 @@ import pickle
 import rsa
 
 # initializing file names
-filename = '.\passwords.pickle'
-public = '.\public.pem'
-private = '.\private.pem'
+filename = '.\pwman\passwords.pickle'
+public = '.\pwman\public.pem'
+private = '.\pwman\private.pem'
 
 def repickle(data: dict) -> None:
     """Resaves the data after unpickling
@@ -174,8 +174,12 @@ def check_sites(site) -> Tuple[str, str]:
 
     # opening the file and importing the pickled data
     file = open(filename, 'rb')
-    data = pickle.load(file)
-    passwords = decryption(data)
+    try:
+        data = pickle.load(file)
+        passwords = decryption(data)
+    except EOFError:
+        passwords = {}
+    
     file.close()
 
     # Resaving the encrypted data
@@ -232,10 +236,12 @@ def encryption(message: str) -> str:
     Returns:
         str: the encrypted data in a bytes array format
     """
+    import json
     with open(public, 'rb') as f:
         public_key = rsa.PublicKey.load_pkcs1(f.read())
     
-    encrypted: str = rsa.encrypt(message.encode(), public_key)
+    message_bytes: bytes = json.dumps(message).encode('utf-8')
+    encrypted: str = rsa.encrypt(message_bytes, public_key)
 
     return encrypted
 
@@ -248,26 +254,38 @@ def decryption(message: str) -> str:
     Returns:
         str: An unencrypted string containing the secured data
     """
+    import json
     with open(private, 'rb') as f:
         private_key = rsa.PrivateKey.load_pkcs1(f.read())
     
-    unencrypted: str = rsa.ecrypt(message, private_key)
+    unencrypted_bytes: bytes = rsa.decrypt(message, private_key)
+    unencrypted = json.loads(unencrypted_bytes.decode('utf-8'))
 
-    return unencrypted.decode()
+    return unencrypted
+
+def initializer() -> None:
+    """Initializes the file paths and creates the files and keys"""
+    from os import path, mkdir, getcwd
+    curr_directory = getcwd()
+    path_ = path.join(curr_directory, "pwman")
+    if not path.exists(path_):
+        mkdir(path_)
+    # Creating a file if it doesn't exist
+    if not path.isfile(filename):
+        file = open(filename, 'x')
+        file.close()
+
+    if not path.isfile(public) or not path.isfile(private):
+        generate_keys(1024)
 
 def main():
     import pyperclip
-    import os.path
+
     print("""Welcome to Password Manager, to proceed, you can type n to create a new password, l to load a 
         previously saved password, or r to either set a password manually or reset an existing password.""")
     
-    # Creating a file if it doesn't exist
-    if not os.path.isfile(filename):
-        file = open(filename, 'wb+')
-        file.close()
-
-    if not os.path.isfile(public) or not os.path.isfile(private):
-        generate_keys(1024)
+    # making sure our files are initialized
+    initializer()
     
     new_load: str = input("What would you like to do? (nlr) ")
 
