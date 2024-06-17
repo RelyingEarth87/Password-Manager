@@ -12,7 +12,7 @@ At this time, running this program requires a Python installation. It was writte
 If you do not have Python, you will need to install it.
 
 1. Install Python (preferably version 3.9 or later)
-2. Download the pw_manager.py file from this repository
+2. Download all files from this repository except the README.md file (you can put them into a file for organization, the necessary other files will be created when the program is run
 3. Pip install required libraries from requirements.txt, as directed below:
 
 ## Pip Installs
@@ -27,6 +27,7 @@ You will need to go to the command prompt to install the packages this program u
 6. (optional) If you would like (or if you get an error from my very basic implementation of file naming convention), you can change the path to a specific folder or file name in line 2 of the program file.
 
 # Running the program
+You should be able to run the program directly by opening the pw_gui.py file.
 The function will automatically run for you when you run the program, but I would recommend running it in a code editor or IDE so you can see the output before the program closes.
 When it starts, it will ask if you want the program to create a new password for you, if you want to retrieve an already saved password, or if you want to either bring over an existing password or reset one that the program made for you.
 You can type "n" and Enter for a new password, "l" (lowercase L) and Enter to retrieve your saved password for a given website, or "r" to either manually or automatically set a password for an existing password either from a different service or from your previously saved passwords.
@@ -57,6 +58,7 @@ This program now is equipped with Symmetric Encryption for your data, using the 
 
 # Upcoming Updates
 Currently working slowly on adding to this program to increase the convenience, accessibility, and features.
+The Transfer Data button currently does not do anything as of yet, but there may be an update in the future.
 
 Working on adding:
 
