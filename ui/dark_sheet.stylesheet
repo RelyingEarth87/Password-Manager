@@ -1,0 +1,9 @@
+QApplication, QMainWindow, QDialog, QLabel, QCheckBox, QGroupBox, QRadioButton {
+    background-color: rgb(38, 38, 38);
+    color: rgb(190, 190, 190);
+}
+
+QPushButton {
+    background-color: rgb(60, 60, 60);
+    color: rgb(190, 190, 190);
+}

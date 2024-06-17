@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PwMan</class>
+ <widget class="QMainWindow" name="PwMan">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>351</width>
+    <height>556</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Password Manager</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="actions">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>160</y>
+      <width>281</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <widget class="QPushButton" name="setPassword">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>180</y>
+       <width>221</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Set/Reset Password</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="loadPassword">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>110</y>
+       <width>221</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Load Password</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="newPassword">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>221</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>New Password</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="deletePassword">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>250</y>
+       <width>221</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Delete Password</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>281</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;h3&gt;Welcome to Password Manager!&lt;/h3&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>100</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large;&quot;&gt;What would you like to do?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>351</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionTransferData"/>
+    <addaction name="actionChangeKeys"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <widget class="QMenu" name="menuPIN_Protection">
+     <property name="title">
+      <string>PIN Protection</string>
+     </property>
+     <addaction name="actionPinChange"/>
+     <addaction name="actionDelete_PIN"/>
+    </widget>
+    <addaction name="actionDarkMode"/>
+    <addaction name="menuPIN_Protection"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDarkMode">
+   <property name="text">
+    <string>Dark Mode On/Off</string>
+   </property>
+   <property name="toolTip">
+    <string>Turn Dark Mode On or Off (Applies on reload)</string>
+   </property>
+  </action>
+  <action name="actionPinChange">
+   <property name="text">
+    <string>Add/Change PIN</string>
+   </property>
+   <property name="toolTip">
+    <string>Set a PIN number or password to protect the app (recommended)</string>
+   </property>
+  </action>
+  <action name="actionChangeKeys">
+   <property name="text">
+    <string>Change Encryption Keys</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the RSA encryption keys (Only do this when your data has been compromised)</string>
+   </property>
+  </action>
+  <action name="actionTransferData">
+   <property name="text">
+    <string>Transfer data</string>
+   </property>
+   <property name="toolTip">
+    <string>Transfer data to another device (do NOT do this with any device you do not trust)</string>
+   </property>
+  </action>
+  <action name="actionDelete_PIN">
+   <property name="text">
+    <string>Delete PIN</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
